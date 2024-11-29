@@ -2,7 +2,10 @@
 
 
 #include "MainEcosys.h"
-#include <fstream>
+//#include <iostream>
+//#include <fstream>
+//#include <filesystem>
+//#include <string>
 
 // Sets default values
 AMainEcosys::AMainEcosys()
@@ -17,15 +20,39 @@ AMainEcosys::AMainEcosys()
 }
 
 // Called when the game starts or when spawned
+THIRD_PARTY_INCLUDES_START
+#include "ThirdParty/ofifstream.h"
+THIRD_PARTY_INCLUDES_END
 void AMainEcosys::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	std::ifstream readSave;
-	readSave.open("save.dat", std::ios::binary);
-	if (readSave.is_open())
-		readSave.close();
-	
+	ViewOFstream writeRat;
+	writeRat.open("sav.dat");
+	if (writeRat.is_open())
+	{
+		writeRat.write("Hhiiii!!! This is your save file:)", 34);
+		writeRat.close();
+	}
+
+	//std::ofstream readSave;
+	//readSave.open("save.dat", std::ios::binary);
+	//if (readSave.is_open())
+	//{
+	//	readSave.write("save here", 10);
+	//	readSave.close();
+
+	//	std::filesystem::path a = "save.dat";
+	//	std::filesystem::path b = std::filesystem::absolute(a);
+
+	//	readSave.open("C:/Users/SLAVA/Desktop/theBigHint.txt", std::ios::binary);
+	//	if (readSave.is_open())
+	//	{
+	//		std::string temp = b.generic_string();
+	//		readSave.write(temp.c_str(), temp.length());
+	//		readSave.close();
+	//	}
+	//}
 }
 
 // Called every frame
