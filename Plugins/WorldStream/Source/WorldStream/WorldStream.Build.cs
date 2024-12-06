@@ -3,25 +3,26 @@
 using System.IO;
 using UnrealBuildTool;
 
-public class SimpleFileStreams : ModuleRules
+public class WorldStream : ModuleRules
 {
-	public SimpleFileStreams(ReadOnlyTargetRules Target) : base(Target)
+	public WorldStream(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
         //PublicIncludePaths.AddRange(
-        //	new string[] {
-        //		// ... add public include paths required here ...
-        //	}
-        //	);
-        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "ofifstream.h"));
+        //new string[] {
+        // ... add public include paths required here ...
+        //}
+        //);
+
+        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.h"));
 
 
         //PrivateIncludePaths.AddRange(
-        //	new string[] {
-        //		// ... add other private include paths required here ...
-        //	}
-        //	);
+        //new string[] {
+        // ... add other private include paths required here ...
+        //}
+        //D);
 
 
         PublicDependencyModuleNames.AddRange(
@@ -31,7 +32,8 @@ public class SimpleFileStreams : ModuleRules
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
-        PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "ofifstream.lib"));
+
+        PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.lib"));
 
 
         PrivateDependencyModuleNames.AddRange(
@@ -47,10 +49,10 @@ public class SimpleFileStreams : ModuleRules
 		
 		
 		//DynamicallyLoadedModuleNames.AddRange(
-		//	new string[]
-		//	{
-		//		// ... add any modules that your module loads dynamically here ...
-		//	}
-		//	);
+			//new string[]
+			//{
+				// ... add any modules that your module loads dynamically here ...
+			//}
+			//);
 	}
 }

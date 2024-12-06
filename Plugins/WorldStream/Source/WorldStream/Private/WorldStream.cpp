@@ -1,15 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "SimpleFileStreams.h"
+#include "WorldStream.h"
 
-#define LOCTEXT_NAMESPACE "FSimpleFileStreamsModule"
+#define LOCTEXT_NAMESPACE "FWorldStreamModule"
 
-void FSimpleFileStreamsModule::StartupModule()
+void FWorldStreamModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
-void FSimpleFileStreamsModule::ShutdownModule()
+void FWorldStreamModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
@@ -17,4 +17,4 @@ void FSimpleFileStreamsModule::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FSimpleFileStreamsModule, SimpleFileStreams)
+IMPLEMENT_MODULE(FWorldStreamModule, WorldStream)

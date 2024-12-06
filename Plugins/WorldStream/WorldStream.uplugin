@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "SimpleFileStreams",
+	"FriendlyName": "WorldStream",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "",
@@ -16,7 +16,7 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "SimpleFileStreams",
+			"Name": "WorldStream",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}

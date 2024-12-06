@@ -20,20 +20,20 @@ AMainEcosys::AMainEcosys()
 }
 
 // Called when the game starts or when spawned
-THIRD_PARTY_INCLUDES_START
-#include "ThirdParty/ofifstream.h"
-THIRD_PARTY_INCLUDES_END
+//THIRD_PARTY_INCLUDES_START
+//#include "ThirdParty/WorldFStream.h"
+//THIRD_PARTY_INCLUDES_END
 void AMainEcosys::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ViewOFstream writeRat;
-	writeRat.open("sav.dat");
-	if (writeRat.is_open())
-	{
-		writeRat.write("Hhiiii!!! This is your save file:)", 34);
-		writeRat.close();
-	}
+	//ViewOFstream writeRat;
+	//writeRat.open("sav.dat");
+	//if (writeRat.is_open())
+	//{
+		//writeRat.write("Hhiiii!!! This is your save file:)", 34);
+		//writeRat.close();
+	//}
 
 	//std::ofstream readSave;
 	//readSave.open("save.dat", std::ios::binary);

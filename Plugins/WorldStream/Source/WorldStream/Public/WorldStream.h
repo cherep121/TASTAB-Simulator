@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FSimpleFileStreamsModule : public IModuleInterface
+class FWorldStreamModule : public IModuleInterface
 {
 public:
 

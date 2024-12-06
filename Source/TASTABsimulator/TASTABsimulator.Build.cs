@@ -9,7 +9,7 @@ public class TASTABsimulator : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "SimpleFileStreams" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "WorldStream" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
