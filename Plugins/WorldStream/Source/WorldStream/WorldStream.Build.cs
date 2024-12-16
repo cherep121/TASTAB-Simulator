@@ -9,34 +9,34 @@ public class WorldStream : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        //PublicIncludePaths.AddRange(
-        //new string[] {
-        // ... add public include paths required here ...
-        //}
-        //);
-
-        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.h"));
-
-
-        //PrivateIncludePaths.AddRange(
-        //new string[] {
-        // ... add other private include paths required here ...
-        //}
-        //D);
+		//PublicIncludePaths.AddRange(
+		//	new string[] {
+		//		// ... add public include paths required here ...
+		//	}
+		//	);
+		PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.h"));
 
 
-        PublicDependencyModuleNames.AddRange(
+		//PrivateIncludePaths.AddRange(
+		//new string[] {
+		//	// ... add other private include paths required here ...
+		//}
+		//);
+
+
+		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
+		//PublicDependencyModuleNames.AddRange(
+		//	["Core"]
+		//);
 
-        PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.lib"));
 
-
-        PrivateDependencyModuleNames.AddRange(
+		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"CoreUObject",
@@ -45,14 +45,26 @@ public class WorldStream : ModuleRules
 				"SlateCore",
 				// ... add private dependencies that you statically link with here ...	
 			}
-			);
-		
-		
+		);
+		//PrivateDependencyModuleNames.AddRange(
+		//[
+		//	"CoreUObject",
+		//	"Engine",
+		//	"Slate",
+		//	"SlateCore",
+		//          // ... add private dependencies that you statically link with here ...	
+		//      ]
+		//);
+
+
 		//DynamicallyLoadedModuleNames.AddRange(
-			//new string[]
-			//{
-				// ... add any modules that your module loads dynamically here ...
-			//}
-			//);
+		//	new string[]
+		//	{
+		//		// ... add any modules that your module loads dynamically here ...
+		//	}
+		//	);
+
+
+		PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "..", "ThirdParty", "WorldFStream.lib"));
 	}
 }
