@@ -19,62 +19,96 @@ AMainField::AMainField()
 	mainCamera->SetWorldRotation(FQuat(0.5, -0.5, -0.5, -0.5));
 	//mainCamera->SetWorldRotation(FQuat());
 
-	tileMeshes.SetNum(9);
-	tileMaterials.SetNum(9);
+	tileMeshes.SetNum(19);
+	tileMaterials.SetNum(19);
 	{
 		{
 			static ConstructorHelpers::FObjectFinder<UStaticMesh> meshToLoad(TEXT("/Game/Models/floor"));
-			tileMeshes[5] = tileMeshes[4] = tileMeshes[3] = tileMeshes[2] = tileMeshes[1] = tileMeshes[0] = meshToLoad.Object.Get();
+			for (size_t i = 0; i < 16; i++)
+				tileMeshes[i] = meshToLoad.Object.Get();
 		}
 
 		{
 			static ConstructorHelpers::FObjectFinder<UStaticMesh> meshToLoad(TEXT("/Game/Models/wall"));
-			tileMeshes[8] = tileMeshes[7] = tileMeshes[6] = meshToLoad.Object.Get();
+			for (size_t i = 16; i < 20; i++)
+				tileMeshes[i] = meshToLoad.Object.Get();
 		}
 
 		{
 			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/floor1Mat"));
 			tileMaterials[0] = materialToLoad.Object.Get();
 		}
-
 		{
 			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/floor2Mat"));
 			tileMaterials[1] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player1Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/bushMat"));
 			tileMaterials[2] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player2Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/crateMat"));
 			tileMaterials[3] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player3Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player1Mat"));
 			tileMaterials[4] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player4Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player2Mat"));
 			tileMaterials[5] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/wall1Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player3Mat"));
 			tileMaterials[6] = materialToLoad.Object.Get();
 		}
-
 		{
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/wall2Mat"));
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/player4Mat"));
 			tileMaterials[7] = materialToLoad.Object.Get();
 		}
-
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/pineMat"));
+			tileMaterials[8] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/rockMat"));
+			tileMaterials[9] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/treeMat"));
+			tileMaterials[10] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/waterMat"));
+			tileMaterials[11] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/cracked1Mat"));
+			tileMaterials[12] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/cracked2Mat"));
+			tileMaterials[13] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/cracked3Mat"));
+			tileMaterials[14] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/cracked4Mat"));
+			tileMaterials[15] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/wall1Mat"));
+			tileMaterials[16] = materialToLoad.Object.Get();
+		}
+		{
+			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/wall2Mat"));
+			tileMaterials[17] = materialToLoad.Object.Get();
+		}
 		{
 			static ConstructorHelpers::FObjectFinder<UMaterialInterface> materialToLoad(TEXT("/Game/Materials/wall3Mat"));
-			tileMaterials[8] = materialToLoad.Object.Get();
+			tileMaterials[18] = materialToLoad.Object.Get();
 		}
 	}
 
@@ -173,10 +207,10 @@ void AMainField::Tick(float DeltaTime)
 						gridTiles[x + y * 16 + X * 256 + Y * 4096]->SetMaterial(0, tileMaterials[tileId]);
 						if ((tileId >= 2) && (tileId >= 2))
 						{
-							px = x;
-							pX = X;
-							py = y;
-							pY = Y;
+							playerPos[0] = x;
+							playerPos[1] = X;
+							playerPos[2] = y;
+							playerPos[3] = Y;
 						}
 					}
 				}
@@ -184,7 +218,7 @@ void AMainField::Tick(float DeltaTime)
 				return;
 			}
 		}
-		mainCamera->SetRelativeLocation((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0);
+		mainCamera->SetRelativeLocation((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0);
 		theState = 4;
 		break;
 	case 3:
@@ -197,11 +231,11 @@ void AMainField::Tick(float DeltaTime)
 			{
 				unsigned int nextTileId;
 				if (plaerPos[2] == 15)
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY + 1][px];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][playerPos[3] + 1][px];
 				else
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][px + (py + 1) * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][playerPos[3]][px + (py + 1) * 16];
 
-				if (nextTileId < 2)
+				if (nextTileId < 4)
 				{
 					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
@@ -215,7 +249,7 @@ void AMainField::Tick(float DeltaTime)
 					{
 						py++;
 					}
-					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 2;
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 4;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[2]);
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[2]);
 					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
@@ -231,7 +265,7 @@ void AMainField::Tick(float DeltaTime)
 				else
 					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][(px + 1) + py * 16];
 
-				if (nextTileId < 2)
+				if (nextTileId < 4)
 				{
 					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
@@ -245,7 +279,7 @@ void AMainField::Tick(float DeltaTime)
 					{
 						px++;
 					}
-					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 5;
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 7;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[5]);
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[5]);
 					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
@@ -261,7 +295,7 @@ void AMainField::Tick(float DeltaTime)
 				else
 					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][px + (py - 1) * 16];
 
-				if (nextTileId < 2)
+				if (nextTileId < 4)
 				{
 					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
@@ -275,7 +309,7 @@ void AMainField::Tick(float DeltaTime)
 					{
 						py--;
 					}
-					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 4;
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 6;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[4]);
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[4]);
 					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
@@ -291,7 +325,7 @@ void AMainField::Tick(float DeltaTime)
 				else
 					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][(px - 1) + py * 16];
 
-				if (nextTileId < 2)
+				if (nextTileId < 4)
 				{
 					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
@@ -305,7 +339,7 @@ void AMainField::Tick(float DeltaTime)
 					{
 						px--;
 					}
-					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 3;
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 5;
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[3]);
 					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[3]);
 					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
