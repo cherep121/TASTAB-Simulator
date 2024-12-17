@@ -132,6 +132,10 @@ void AMainField::BeginPlay()
 }
 
  //Called every frame
+#define px playerPos[0]
+#define pX playerPos[1]
+#define py playerPos[2]
+#define pY playerPos[3]
 void AMainField::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -169,10 +173,10 @@ void AMainField::Tick(float DeltaTime)
 						gridTiles[x + y * 16 + X * 256 + Y * 4096]->SetMaterial(0, tileMaterials[tileId]);
 						if ((tileId >= 2) && (tileId >= 2))
 						{
-							playerPos[0] = x;
-							playerPos[1] = X;
-							playerPos[2] = y;
-							playerPos[3] = Y;
+							px = x;
+							pX = X;
+							py = y;
+							pY = Y;
 						}
 					}
 				}
@@ -180,7 +184,7 @@ void AMainField::Tick(float DeltaTime)
 				return;
 			}
 		}
-		mainCamera->SetRelativeLocation((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0);
+		mainCamera->SetRelativeLocation((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0);
 		theState = 4;
 		break;
 	case 3:
@@ -193,28 +197,28 @@ void AMainField::Tick(float DeltaTime)
 			{
 				unsigned int nextTileId;
 				if (plaerPos[2] == 15)
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3] + 1][playerPos[0]];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY + 1][px];
 				else
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + (playerPos[2] + 1) * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][px + (py + 1) * 16];
 
 				if (nextTileId < 2)
 				{
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 0;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[0]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[0]);
-					if (playerPos[2] == 15)
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[0]);
+					if (py == 15)
 					{
-						playerPos[2] = 0;
-						playerPos[3]++;
+						py = 0;
+						pY++;
 					}
 					else
 					{
-						playerPos[2]++;
+						py++;
 					}
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 2;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[2]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[2]);
-					mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 2;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[2]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[2]);
+					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 				}
 			}
 
@@ -223,28 +227,28 @@ void AMainField::Tick(float DeltaTime)
 			{
 				unsigned int nextTileId;
 				if (plaerPos[0] == 15)
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1] + 1][playerPos[3]][playerPos[2] * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX + 1][pY][py * 16];
 				else
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][(playerPos[0] + 1) + playerPos[2] * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][(px + 1) + py * 16];
 
 				if (nextTileId < 2)
 				{
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 0;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[0]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[0]);
-					if (playerPos[0] == 15)
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[0]);
+					if (px == 15)
 					{
-						playerPos[0] = 0;
-						playerPos[1]++;
+						px = 0;
+						pX++;
 					}
 					else
 					{
-						playerPos[0]++;
+						px++;
 					}
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 5;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[5]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[5]);
-					mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 5;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[5]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[5]);
+					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 				}
 			}
 
@@ -253,28 +257,28 @@ void AMainField::Tick(float DeltaTime)
 			{
 				unsigned int nextTileId;
 				if (plaerPos[1] == 0)
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3] - 1][playerPos[0] + 15 * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY - 1][px + 15 * 16];
 				else
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + (playerPos[2] - 1) * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][px + (py - 1) * 16];
 
 				if (nextTileId < 2)
 				{
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 0;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[0]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[0]);
-					if (playerPos[0] == 15)
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[0]);
+					if (px == 15)
 					{
-						playerPos[2] = 15;
-						playerPos[3]--;
+						py = 15;
+						pY--;
 					}
 					else
 					{
-						playerPos[2]--;
+						py--;
 					}
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 4;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[4]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[4]);
-					mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 4;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[4]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[4]);
+					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 				}
 			}
 
@@ -283,28 +287,28 @@ void AMainField::Tick(float DeltaTime)
 			{
 				unsigned int nextTileId;
 				if (plaerPos[0] == 0)
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1] - 1][playerPos[3]][15 + playerPos[2] * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX - 1][pY][15 + py * 16];
 				else
-					nextTileId = (((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][(playerPos[0] - 1) + playerPos[2] * 16];
+					nextTileId = (((WorldFStream*)worldData)[0]).segments[pX][pY][(px - 1) + py * 16];
 
 				if (nextTileId < 2)
 				{
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 0;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[0]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[0]);
-					if (playerPos[0] == 15)
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 0;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[0]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[0]);
+					if (px == 15)
 					{
-						playerPos[0] = 15;
-						playerPos[1]--;
+						px = 15;
+						pX--;
 					}
 					else
 					{
-						playerPos[0]--;
+						px--;
 					}
-					(((WorldFStream*)worldData)[0]).segments[playerPos[1]][playerPos[3]][playerPos[0] + playerPos[2] * 16] = 3;
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetStaticMesh(tileMeshes[3]);
-					gridTiles[playerPos[0] + playerPos[2] * 16 + playerPos[1] * 256 + playerPos[3] * 4096]->SetMaterial(0, tileMaterials[3]);
-					mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+					(((WorldFStream*)worldData)[0]).segments[pX][pY][px + py * 16] = 3;
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetStaticMesh(tileMeshes[3]);
+					gridTiles[px + py * 16 + pX * 256 + pY * 4096]->SetMaterial(0, tileMaterials[3]);
+					mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 				}
 			}
 
@@ -316,33 +320,33 @@ void AMainField::Tick(float DeltaTime)
 				}
 			}
 
-			if (playerPos[3] > 2)
+			if (pY > 2)
 			{
 				(((WorldFStream*)worldData)[0]).SetPos((((WorldFStream*)worldData)[0]).posXLoad, (((WorldFStream*)worldData)[0]).posYLoad + 1, (char**)gridTiles.GetData());
 				isLoading = 1;
-				playerPos[3]--;
-				mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+				pY--;
+				mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 			}
-			else if (playerPos[1] > 2)
+			else if (pX > 2)
 			{
 				(((WorldFStream*)worldData)[0]).SetPos((((WorldFStream*)worldData)[0]).posXLoad + 1, (((WorldFStream*)worldData)[0]).posYLoad, (char**)gridTiles.GetData());
 				isLoading = 1;
-				playerPos[1]--;
-				mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+				pX--;
+				mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 			}
-			else if (playerPos[3] < 1)
+			else if (pY < 1)
 			{
 				(((WorldFStream*)worldData)[0]).SetPos((((WorldFStream*)worldData)[0]).posXLoad, (((WorldFStream*)worldData)[0]).posYLoad - 1, (char**)gridTiles.GetData());
 				isLoading = 1;
-				playerPos[3]++;
-				mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+				pY++;
+				mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 			}
-			else if (playerPos[1] < 1)
+			else if (pX < 1)
 			{
 				(((WorldFStream*)worldData)[0]).SetPos((((WorldFStream*)worldData)[0]).posXLoad - 1, (((WorldFStream*)worldData)[0]).posYLoad, (char**)gridTiles.GetData());
 				isLoading = 1;
-				playerPos[1]++;
-				mainCamera->SetRelativeLocation(FVector((double)((playerPos[0] + playerPos[1] * 16) * 100 + 50), (double)((playerPos[2] + playerPos[3] * 16) * 100 + 50), 1000.0));
+				pX++;
+				mainCamera->SetRelativeLocation(FVector((double)((px + pX * 16) * 100 + 50), (double)((py + pY * 16) * 100 + 50), 1000.0));
 			}
 
 			if (isLoading)
